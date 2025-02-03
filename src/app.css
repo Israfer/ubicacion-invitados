@@ -1,0 +1,46 @@
+:root {
+  /* Variables globales para facilitar la consistencia y el mantenimiento */
+  --font-size-title: 2.5rem;
+  --font-weight-title: bold;
+  --margin-bottom-title: 20px;
+  --gap-counter: 15px;
+  --margin-bottom-counter: 20px;
+  --update-button-font-size: 1.5rem;
+  --update-button-transition: 0.2s;
+  --update-button-scale-hover: 1.2;
+}
+
+/* Contenedor principal de la aplicación */
+.app-container {
+  text-align: center;
+}
+
+/* Título principal */
+.title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+  text-align: center;
+  margin-bottom: var(--margin-bottom-title);
+}
+
+/* Contenedor del contador */
+.counter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-counter);
+  margin-bottom: var(--margin-bottom-counter);
+}
+
+/* Botón para actualizar el contador */
+.update-button {
+  background: none;    /* Elimina el fondo */
+  border: none;        /* Elimina el borde */
+  font-size: var(--update-button-font-size);
+  cursor: pointer;
+  transition: transform var(--update-button-transition);
+}
+
+.update-button:hover {
+  transform: scale(var(--update-button-scale-hover));
+}
