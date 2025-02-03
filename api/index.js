@@ -11,9 +11,9 @@ if (process.env.NODE_ENV !== "production") {
 
 const app = express();
 
-// Desactivar Keep-Alive en todas las respuestas
+// Desactivar Keep-Alive para forzar el cierre de la conexión y evitar timeout
 app.use((req, res, next) => {
-  res.setHeader('Connection', 'close');
+  res.setHeader("Connection", "close");
   next();
 });
 
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
   res.end();
 });
 
-// Monta las rutas de la API
+// Monta las rutas de la API (imitando el código original)
 app.use("/", guestLocationRoutes);
 
 // Ruta 404 para rutas no definidas
