@@ -13,12 +13,14 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Ruta raíz para mostrar un mensaje de bienvenida o información del API
-app.get("/", (req, res) => {
-  res.send("Bienvenido al Backend de Ubicación de Invitados. Utiliza la ruta /api para acceder a los endpoints.");
+// Agregar una ruta específica para la raíz /api
+app.get("/api", (req, res) => {
+  res.json({
+    message: "Bienvenido a la API de Ubicación de Invitados. Utilice los endpoints /api/buscar, /api/croquis y /api/mesa."
+  });
 });
 
-// Rutas de la API para Ubicación de Invitados
+// Middleware de rutas: todas las demás rutas API
 app.use("/api", guestLocationRoutes);
 
 // Ruta 404 para rutas no definidas
