@@ -1,7 +1,7 @@
 // src/services/api.js
 import axios from "axios";
 
-// URL base del backend (definida vía variable de entorno o hardcodeada para pruebas)
+// URL base del backend (puedes configurarla vía variable de entorno)
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://ubicacion-invitados.vercel.app/api";
 
 /**

@@ -1,22 +1,21 @@
 // src/App.jsx
 import React, { useState, useCallback } from "react";
-import SearchLocation from "./components/SearchLocation"; // Asegúrate de tener este componente implementado
+import SearchLocation from "./components/SearchLocation";
 import QRImageUpload from "./components/QRImageUpload";
 import "./app.css";
 import "./index.css";
 
 function App() {
-  // 'view' determinará qué opción se muestra: null = pantalla de selección,
-  // "search" = búsqueda por nombre, "qrUpload" = subida de imagen de QR.
+  // 'view' determina qué vista se muestra: null = selección, "search" = búsqueda, "qrUpload" = subir imagen de QR.
   const [view, setView] = useState(null);
-  const [sheetId, setSheetId] = useState("1n_b8RZ7DkWNu-Ht0N-3hYKDhyapNVN8fMwSXb8fT8aU"); // Reemplaza con tu ID real si lo deseas
+  const [sheetId, setSheetId] = useState("1n_b8RZ7DkWNu-Ht0N-3hYKDhyapNVN8fMwSXb8fT8aU"); // Cambia si es necesario
   const [qrResult, setQrResult] = useState(null);
 
-  // Callback que se ejecuta cuando se decodifica el QR
+  // Callback que se ejecuta al decodificar el QR
   const handleQRScan = useCallback(
     (data) => {
       console.log("Datos del QR:", data);
-      // Llama al endpoint de búsqueda usando el dato decodificado
+      // Llama al endpoint de búsqueda usando el dato del QR
       fetch(`https://ubicacion-invitados.vercel.app/api/buscar?sheetId=${sheetId}&qrData=${encodeURIComponent(data)}&detalle=true`)
         .then((response) => response.json())
         .then((result) => {
@@ -27,7 +26,7 @@ function App() {
     [sheetId]
   );
 
-  // Si aún no se ha seleccionado una opción, muestra la pantalla de selección
+  // Pantalla de selección inicial
   if (view === null) {
     return (
       <div className="app-container">
@@ -39,17 +38,13 @@ function App() {
     );
   }
 
-  // Renderiza la vista correspondiente
+  // Renderiza la vista seleccionada
   return (
     <div className="app-container">
       <h1 className="title">Ubicación de Invitados</h1>
       <button onClick={() => { setView(null); setQrResult(null); }}>Volver</button>
-      {view === "search" && (
-        <SearchLocation sheetId={sheetId} />
-      )}
-      {view === "qrUpload" && (
-        <QRImageUpload onScan={handleQRScan} />
-      )}
+      {view === "search" && <SearchLocation sheetId={sheetId} />}
+      {view === "qrUpload" && <QRImageUpload onScan={handleQRScan} />}
       {qrResult && (
         <div>
           <h2>Resultado de la búsqueda por QR</h2>

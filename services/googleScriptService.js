@@ -13,17 +13,16 @@ if (!googleScriptUrl) {
  * Llama al endpoint GET para buscar ubicación.
  * @param {string} query - Texto de búsqueda o datos del QR.
  * @param {string} sheetId - ID de la Google Sheet.
- * @param {boolean} detalle - Si se requiere detalle único.
+ * @param {boolean|string} detalle - Si se requiere detalle único.
  * @returns {Promise<Object>} Resultado de la búsqueda.
  */
-export async function buscarUbicacion(query, sheetId, detalle) {
+export async function buscarUbicacion({ parameter: { sheetId, search, detalle } }) {
   try {
     const url = new URL(googleScriptUrl);
     url.searchParams.append("action", "buscar");
     url.searchParams.append("sheetId", sheetId);
-    // Se envía el query como "search"
-    url.searchParams.append("search", query);
-    if (detalle) {
+    url.searchParams.append("search", search);
+    if (detalle === "true" || detalle === true) {
       url.searchParams.append("detalle", "true");
     }
     const response = await axios.get(url.toString());
@@ -38,7 +37,7 @@ export async function buscarUbicacion(query, sheetId, detalle) {
  * @param {string} sheetId - ID de la Google Sheet.
  * @returns {Promise<Object>} Datos del croquis.
  */
-export async function getCroquisData(sheetId) {
+export async function getCroquisData({ parameter: { sheetId } }) {
   try {
     const url = new URL(googleScriptUrl);
     url.searchParams.append("action", "croquis");
@@ -56,7 +55,7 @@ export async function getCroquisData(sheetId) {
  * @param {string} sheetId - ID de la Google Sheet.
  * @returns {Promise<Object>} Datos de la mesa.
  */
-export async function getMesaData(mesa, sheetId) {
+export async function getMesaData({ parameter: { mesa, sheetId } }) {
   try {
     const url = new URL(googleScriptUrl);
     url.searchParams.append("action", "mesa");

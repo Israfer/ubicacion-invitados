@@ -20,14 +20,12 @@ const QRImageUpload = ({ onScan }) => {
       const imageDataUrl = event.target.result;
       const image = new Image();
       image.onload = function() {
-        // Crear un canvas para extraer los datos de la imagen
         const canvas = document.createElement("canvas");
         canvas.width = image.width;
         canvas.height = image.height;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(image, 0, 0, image.width, image.height);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        // Usar jsQR para decodificar el código QR
         const code = jsQR(imageData.data, imageData.width, imageData.height);
         if (code) {
           onScan(code.data);
