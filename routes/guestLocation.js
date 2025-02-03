@@ -1,13 +1,14 @@
 // routes/guestLocation.js
-const express = require('express');
+import express from "express";
+import { buscarUbicacion, getCroquisData, getMesaData } from "../services/googleScriptService.js";
+
 const router = express.Router();
-const { buscarUbicacion, getCroquisData, getMesaData } = require('../services/googleScriptService');
 
 /**
  * Endpoint GET: /buscar
- * Parámetros: sheetId, search (o qrData) y opcional detalle ("true" para detalle único)
+ * Parámetros: sheetId, search (o qrData) y opcional detalle ("true" para obtener detalle único)
  */
-router.get('/buscar', async (req, res) => {
+router.get("/buscar", async (req, res) => {
   const { sheetId, search, qrData, detalle } = req.query;
   if (!sheetId || (!search && !qrData)) {
     return res.status(400).json({ error: "Falta sheetId o parámetros de búsqueda (search o qrData)" });
@@ -25,7 +26,7 @@ router.get('/buscar', async (req, res) => {
  * Endpoint GET: /croquis
  * Parámetro: sheetId
  */
-router.get('/croquis', async (req, res) => {
+router.get("/croquis", async (req, res) => {
   const { sheetId } = req.query;
   if (!sheetId) {
     return res.status(400).json({ error: "Falta sheetId" });
@@ -42,7 +43,7 @@ router.get('/croquis', async (req, res) => {
  * Endpoint GET: /mesa
  * Parámetros: sheetId, mesa
  */
-router.get('/mesa', async (req, res) => {
+router.get("/mesa", async (req, res) => {
   const { sheetId, mesa } = req.query;
   if (!sheetId || !mesa) {
     return res.status(400).json({ error: "Falta sheetId o mesa" });
@@ -55,4 +56,4 @@ router.get('/mesa', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

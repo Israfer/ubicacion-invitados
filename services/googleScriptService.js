@@ -1,7 +1,7 @@
 // services/googleScriptService.js
-const axios = require('axios');
-const dotenv = require('dotenv');
-if (process.env.NODE_ENV !== 'production') {
+import axios from "axios";
+import dotenv from "dotenv";
+if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
 
@@ -13,10 +13,10 @@ if (!googleScriptUrl) {
 
 /**
  * Llama al endpoint GET para buscar ubicación.
- * @param {Object} param0 - Objeto con property parameter que contiene sheetId, search y detalle.
+ * @param {Object} param0 - Objeto con property 'parameter' que contiene sheetId, search y detalle.
  * @returns {Promise<Object>} Resultado de la búsqueda.
  */
-async function buscarUbicacion({ parameter: { sheetId, search, detalle } }) {
+export async function buscarUbicacion({ parameter: { sheetId, search, detalle } }) {
   try {
     const url = new URL(googleScriptUrl);
     url.searchParams.append("action", "buscar");
@@ -36,10 +36,10 @@ async function buscarUbicacion({ parameter: { sheetId, search, detalle } }) {
 
 /**
  * Llama al endpoint GET para obtener los datos del croquis.
- * @param {Object} param0 - Objeto con property parameter.sheetId.
+ * @param {Object} param0 - Objeto con property 'parameter' que contiene sheetId.
  * @returns {Promise<Object>} Datos del croquis.
  */
-async function getCroquisData({ parameter: { sheetId } }) {
+export async function getCroquisData({ parameter: { sheetId } }) {
   try {
     const url = new URL(googleScriptUrl);
     url.searchParams.append("action", "croquis");
@@ -55,10 +55,10 @@ async function getCroquisData({ parameter: { sheetId } }) {
 
 /**
  * Llama al endpoint GET para obtener los registros de una mesa.
- * @param {Object} param0 - Objeto con property parameter que contiene mesa y sheetId.
+ * @param {Object} param0 - Objeto con property 'parameter' que contiene mesa y sheetId.
  * @returns {Promise<Object>} Datos de la mesa.
  */
-async function getMesaData({ parameter: { mesa, sheetId } }) {
+export async function getMesaData({ parameter: { mesa, sheetId } }) {
   try {
     const url = new URL(googleScriptUrl);
     url.searchParams.append("action", "mesa");
@@ -72,5 +72,3 @@ async function getMesaData({ parameter: { mesa, sheetId } }) {
     throw new Error(`Error en getMesaData: ${error.message}`);
   }
 }
-
-module.exports = { buscarUbicacion, getCroquisData, getMesaData };
