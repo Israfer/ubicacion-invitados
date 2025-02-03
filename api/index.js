@@ -1,8 +1,8 @@
-// api/index.js
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import serverless from "serverless-http";
+import guestLocationRoutes from "../routes/guestLocation.js";
 
 // Cargar variables de entorno en desarrollo
 if (process.env.NODE_ENV !== "production") {
@@ -13,19 +13,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Ruta mínima de prueba: responde inmediatamente con un JSON
+// Ruta mínima de prueba: responde inmediatamente con JSON
 app.get("/", (req, res) => {
   console.log("Request received on /");
-  res.setHeader("Content-Type", "application/json");
-  // Usamos res.end() para forzar el cierre de la respuesta
-  res.end(JSON.stringify({ message: "Test OK" }));
+  res.json({ message: "Test OK" });
 });
 
-const handler = serverless(app);
-console.log("Handler created.");
+// Monta las rutas de la API
+app.use("/", guestLocationRoutes);
 
-// Exporta por defecto una función que envuelve el handler
-export default function (req, res) {
-  console.log("Handler invoked.");
-  return handler(req, res);
-}
+// Ruta 404 para rutas no definidas
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
+
+// Crea el handler usando serverless-http
+const handler = serverless(app);
+
+// Exporta por defecto el handler obtenido
+export default handler;
