@@ -1,4 +1,3 @@
-// api/index.js
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -14,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Ruta base para /api
+// Ruta base para /api: debe responder inmediatamente
 app.get("/", (req, res) => {
   console.log("Request received on /");
   res.json({
@@ -26,10 +25,16 @@ app.get("/", (req, res) => {
 // Monta las rutas de la API
 app.use("/", guestLocationRoutes);
 
-// Ruta 404 para cualquier otra ruta
+// Ruta 404 para rutas no definidas
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-// Crea el handler usando serverless-http y exporta por defecto
-export default serverless(app);
+// Crea el handler usando serverless-http
+const handler = serverless(app);
+
+// Exporta por defecto una función asíncrona que espera la resolución del handler
+export default async (req, res) => {
+  console.log("Handler invoked.");
+  return await handler(req, res);
+};
