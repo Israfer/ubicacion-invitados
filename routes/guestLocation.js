@@ -5,7 +5,7 @@ const { buscarUbicacion, getCroquisData, getMesaData } = require('../services/go
 
 /**
  * Endpoint GET: /buscar
- * Parámetros: sheetId, search (o qrData) y opcional detalle ("true" para obtener detalle único)
+ * Parámetros: sheetId, search (o qrData) y opcional detalle ("true" para detalle único)
  */
 router.get('/buscar', async (req, res) => {
   const { sheetId, search, qrData, detalle } = req.query;
@@ -14,7 +14,6 @@ router.get('/buscar', async (req, res) => {
   }
   try {
     const query = qrData || search;
-    // Llamamos a la función pasándole un objeto similar a { parameter: { ... } }
     const result = await buscarUbicacion({ parameter: { sheetId, search: query, detalle } });
     res.json(result);
   } catch (error) {

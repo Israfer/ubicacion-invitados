@@ -1,15 +1,12 @@
 // services/googleScriptService.js
 const axios = require('axios');
-
-// Nota: En Vercel, las variables de entorno se inyectan automáticamente, por lo que no es necesario usar dotenv en producción.
-// Si usas dotenv en local, puedes dejarlo para pruebas locales, pero en producción es preferible confiar en process.env.
+const dotenv = require('dotenv');
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+  dotenv.config();
 }
 
 const googleScriptUrl = process.env.GOOGLE_SCRIPT_URL;
 console.log("GOOGLE_SCRIPT_URL:", googleScriptUrl);
-
 if (!googleScriptUrl) {
   throw new Error("La variable de entorno GOOGLE_SCRIPT_URL no está configurada.");
 }
