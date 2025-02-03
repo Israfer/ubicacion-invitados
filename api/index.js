@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Monta las rutas de la API (las rutas se definirán con el prefijo, por ejemplo, /buscar)
+// Monta las rutas de la API (las rutas se definen en guestLocationRoutes)
 app.use("/", guestLocationRoutes);
 
 // Ruta 404 para rutas no definidas
@@ -29,5 +29,5 @@ app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-// Exporta el handler para que Vercel lo use
-export const handler = serverless(app);
+// Exporta por defecto la función manejadora usando serverless-http
+export default serverless(app);
