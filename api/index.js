@@ -1,24 +1,30 @@
 // api/index.js
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import serverless from "serverless-http";
 
-// Creamos una aplicación Express mínima para probar
+// Cargar variables de entorno en desarrollo
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Ruta de prueba: responde inmediatamente con un mensaje
+// Ruta mínima de prueba: responde inmediatamente con un JSON
 app.get("/", (req, res) => {
   console.log("Request received on /");
-  res.json({ message: "Test OK" });
+  res.setHeader("Content-Type", "application/json");
+  // Usamos res.end() para forzar el cierre de la respuesta
+  res.end(JSON.stringify({ message: "Test OK" }));
 });
 
-// Creamos el handler serverless una sola vez
 const handler = serverless(app);
 console.log("Handler created.");
 
-// Exportamos por defecto una función que invoque al handler
+// Exporta por defecto una función que envuelve el handler
 export default function (req, res) {
   console.log("Handler invoked.");
   return handler(req, res);
