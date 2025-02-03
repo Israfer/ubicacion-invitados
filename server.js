@@ -13,15 +13,15 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Ruta específica para la raíz de /api que muestra un mensaje informativo
-app.get("/api", (req, res) => {
+// Ruta raíz para la API (lo que se muestra al acceder a https://ubicacion-invitados.vercel.app/api)
+app.get("/", (req, res) => {
   res.json({
-    message: "Bienvenido a la API de Ubicación de Invitados. Utilice los endpoints /api/buscar, /api/croquis y /api/mesa."
+    message: "Bienvenido a la API de Ubicación de Invitados. Utilice los endpoints /buscar, /croquis y /mesa."
   });
 });
 
-// Rutas de la API
-app.use("/api", guestLocationRoutes);
+// Monta las rutas de la API en la raíz, ya que Vercel remapea /api a la raíz en este caso.
+app.use("/", guestLocationRoutes);
 
 // Ruta 404 para rutas no definidas
 app.use((req, res) => {
