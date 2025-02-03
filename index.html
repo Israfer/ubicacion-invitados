@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Prueba API Ubicación de Invitados</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    input, button {
+      padding: 8px;
+      font-size: 1rem;
+    }
+    #result {
+      background: #f2f2f2;
+      padding: 10px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Prueba de Búsqueda de Ubicación</h1>
+  <p>
+    Ingresa el texto de búsqueda (por ejemplo, parte del nombre) y haz clic en "Buscar".
+  </p>
+  <!-- Input de búsqueda -->
+  <input type="text" id="searchInput" placeholder="Ej: algo">
+  <button id="searchBtn">Buscar</button>
+  <!-- Contenedor para mostrar resultados -->
+  <div id="result"></div>
+
+  <script>
+    // Función que se ejecuta al hacer clic en el botón
+    document.getElementById("searchBtn").addEventListener("click", async function() {
+      // Toma el valor del input de búsqueda
+      const query = document.getElementById("searchInput").value.trim();
+      // ID de la hoja de Google Sheets (reemplázalo si es necesario)
+      const sheetId = "1n_b8RZ7DkWNu-Ht0N-3hYKDhyapNVN8fMwSXb8fT8aU";
+      // Construye la URL del endpoint; se usa el parámetro "search"
+      const url = `https://ubicacion-invitados.vercel.app/api/buscar?sheetId=${sheetId}&search=${encodeURIComponent(query)}`;
+      
+      // Limpia el contenedor de resultados
+      document.getElementById("result").textContent = "Cargando...";
+      
+      try {
+        // Realiza la solicitud a la API
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Error HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        // Muestra el resultado formateado
+        document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        // En caso de error, muestra el mensaje en pantalla
+        document.getElementById("result").textContent = "Error: " + error;
+      }
+    });
+  </script>
+</body>
+</html>
