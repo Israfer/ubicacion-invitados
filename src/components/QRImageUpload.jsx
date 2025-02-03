@@ -1,8 +1,9 @@
 // src/components/QRImageUpload.jsx
 import React, { useState } from "react";
 import jsQR from "jsqr";
+import { fetchSearchDetail } from "../services/api";
 
-const QRImageUpload = ({ onScan }) => {
+const QRImageUpload = ({ sheetId, setResultData }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -14,12 +15,11 @@ const QRImageUpload = ({ onScan }) => {
     }
     setLoading(true);
     setError(null);
-
     const reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
       const imageDataUrl = event.target.result;
       const image = new Image();
-      image.onload = function() {
+      image.onload = function () {
         const canvas = document.createElement("canvas");
         canvas.width = image.width;
         canvas.height = image.height;
@@ -28,19 +28,28 @@ const QRImageUpload = ({ onScan }) => {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const code = jsQR(imageData.data, imageData.width, imageData.height);
         if (code) {
-          onScan(code.data);
+          // Realiza la búsqueda usando el valor decodificado
+          fetchSearchDetail(code.data, sheetId)
+            .then((data) => {
+              setResultData(data.result ? data : { error: data.error });
+              setLoading(false);
+            })
+            .catch((err) => {
+              setError(err.message);
+              setLoading(false);
+            });
         } else {
           setError("No se pudo detectar un código QR en la imagen.");
+          setLoading(false);
         }
-        setLoading(false);
       };
-      image.onerror = function() {
+      image.onerror = function () {
         setError("Error al cargar la imagen.");
         setLoading(false);
       };
       image.src = imageDataUrl;
     };
-    reader.onerror = function() {
+    reader.onerror = function () {
       setError("Error al leer el archivo.");
       setLoading(false);
     };
@@ -49,7 +58,7 @@ const QRImageUpload = ({ onScan }) => {
 
   return (
     <div>
-      <h2>Subir imagen de QR</h2>
+      <h2>Subir Imagen de QR</h2>
       <input type="file" accept="image/*" onChange={handleFileChange} />
       {loading && <p>Cargando...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}

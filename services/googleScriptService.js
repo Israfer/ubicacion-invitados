@@ -11,13 +11,11 @@ if (!googleScriptUrl) {
   throw new Error("La variable de entorno GOOGLE_SCRIPT_URL no está configurada.");
 }
 
-// Configuración del timeout en milisegundos
-const AXIOS_TIMEOUT = 8000; // 8 segundos
+// Puedes agregar timeout si es necesario, por ejemplo, 8000 ms:
+// const AXIOS_TIMEOUT = 8000;
 
 /**
- * Llama al endpoint GET para buscar ubicación.
- * @param {Object} param0 - Objeto con property 'parameter' que contiene sheetId, search y detalle.
- * @returns {Promise<Object>} Resultado de la búsqueda.
+ * Simula la función buscarUbicacion (similar al Apps Script original).
  */
 export async function buscarUbicacion({ parameter: { sheetId, search, detalle } }) {
   try {
@@ -29,7 +27,7 @@ export async function buscarUbicacion({ parameter: { sheetId, search, detalle } 
       url.searchParams.append("detalle", "true");
     }
     console.log("Llamando a URL en buscarUbicacion:", url.toString());
-    const response = await axios.get(url.toString(), { timeout: AXIOS_TIMEOUT });
+    const response = await axios.get(url.toString() /*, { timeout: AXIOS_TIMEOUT }*/);
     return response.data;
   } catch (error) {
     console.error("Error en buscarUbicacion:", error);
@@ -38,9 +36,7 @@ export async function buscarUbicacion({ parameter: { sheetId, search, detalle } 
 }
 
 /**
- * Llama al endpoint GET para obtener los datos del croquis.
- * @param {Object} param0 - Objeto con property 'parameter' que contiene sheetId.
- * @returns {Promise<Object>} Datos del croquis.
+ * Simula la función getCroquisData para obtener datos del mapa interactivo.
  */
 export async function getCroquisData({ parameter: { sheetId } }) {
   try {
@@ -48,7 +44,7 @@ export async function getCroquisData({ parameter: { sheetId } }) {
     url.searchParams.append("action", "croquis");
     url.searchParams.append("sheetId", sheetId);
     console.log("Llamando a URL en getCroquisData:", url.toString());
-    const response = await axios.get(url.toString(), { timeout: AXIOS_TIMEOUT });
+    const response = await axios.get(url.toString() /*, { timeout: AXIOS_TIMEOUT }*/);
     return response.data;
   } catch (error) {
     console.error("Error en getCroquisData:", error);
@@ -57,9 +53,7 @@ export async function getCroquisData({ parameter: { sheetId } }) {
 }
 
 /**
- * Llama al endpoint GET para obtener los registros de una mesa.
- * @param {Object} param0 - Objeto con property 'parameter' que contiene mesa y sheetId.
- * @returns {Promise<Object>} Datos de la mesa.
+ * Simula la función getMesaData para obtener los registros de una mesa.
  */
 export async function getMesaData({ parameter: { mesa, sheetId } }) {
   try {
@@ -68,7 +62,7 @@ export async function getMesaData({ parameter: { mesa, sheetId } }) {
     url.searchParams.append("sheetId", sheetId);
     url.searchParams.append("mesa", mesa);
     console.log("Llamando a URL en getMesaData:", url.toString());
-    const response = await axios.get(url.toString(), { timeout: AXIOS_TIMEOUT });
+    const response = await axios.get(url.toString() /*, { timeout: AXIOS_TIMEOUT }*/);
     return response.data;
   } catch (error) {
     console.error("Error en getMesaData:", error);

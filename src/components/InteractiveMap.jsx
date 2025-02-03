@@ -11,7 +11,6 @@ const InteractiveMap = ({ sheetId }) => {
   useEffect(() => {
     fetchCroquisData(sheetId)
       .then((data) => {
-        // Se espera que data.croquis sea un arreglo de filas: [Mesa, PosX, PosY, ...]
         setMapData(data.croquis || []);
       })
       .catch((err) => setError(err.message));
@@ -34,17 +33,17 @@ const InteractiveMap = ({ sheetId }) => {
   return (
     <div>
       <h2>Mapa Interactivo de Mesas</h2>
-      {error && <div style={{ color: "red" }}>{error}</div>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <div style={{ position: "relative", width: "600px", height: "400px", border: "1px solid #ccc", margin: "auto" }}>
         {mapData.map((table, index) => {
-          // Se espera que cada fila sea: [Mesa, PosX, PosY]
+          // Se asume que cada fila tiene [Mesa, PosX, PosY]
           const mesaNumber = table[0];
           const posX = table[1];
           const posY = table[2];
           const style = {
             position: "absolute",
-            left: posX + "px",
-            top: posY + "px",
+            left: `${posX}px`,
+            top: `${posY}px`,
             cursor: "pointer",
             backgroundColor: "#007bff",
             color: "#fff",
@@ -65,8 +64,14 @@ const InteractiveMap = ({ sheetId }) => {
       </div>
       {selectedMesa && (
         <div style={{
-          position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
-          backgroundColor: "#fff", padding: "20px", border: "1px solid #ccc", zIndex: 1000
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "#fff",
+          padding: "20px",
+          border: "1px solid #ccc",
+          zIndex: 1000
         }}>
           <h3>Detalles de la Mesa {selectedMesa}</h3>
           {mesaDetails && mesaDetails.length > 0 ? (

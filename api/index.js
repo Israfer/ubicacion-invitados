@@ -1,3 +1,4 @@
+// api/index.js
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -13,22 +14,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Ruta mínima de prueba: responde inmediatamente con JSON
+// Ruta base para /api
 app.get("/", (req, res) => {
   console.log("Request received on /");
-  res.json({ message: "Test OK" });
+  res.json({
+    message:
+      "Bienvenido a la API de Ubicación de Invitados. Utilice los endpoints /buscar, /croquis y /mesa."
+  });
 });
 
 // Monta las rutas de la API
 app.use("/", guestLocationRoutes);
 
-// Ruta 404 para rutas no definidas
+// Ruta 404 para cualquier otra ruta
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-// Crea el handler usando serverless-http
-const handler = serverless(app);
-
-// Exporta por defecto el handler obtenido
-export default handler;
+// Crea el handler usando serverless-http y exporta por defecto
+export default serverless(app);

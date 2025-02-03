@@ -5,8 +5,8 @@ import { buscarUbicacion, getCroquisData, getMesaData } from "../services/google
 const router = express.Router();
 
 /**
- * Endpoint GET: /buscar
- * Parámetros: sheetId, search (o qrData) y opcional detalle ("true" para detalle único)
+ * GET /buscar
+ * Parámetros: sheetId, search (o qrData) y opcional detalle ("true" para obtener detalle único)
  */
 router.get("/buscar", async (req, res) => {
   const { sheetId, search, qrData, detalle } = req.query;
@@ -24,7 +24,7 @@ router.get("/buscar", async (req, res) => {
 });
 
 /**
- * Endpoint GET: /croquis
+ * GET /croquis
  * Parámetro: sheetId
  */
 router.get("/croquis", async (req, res) => {
@@ -42,7 +42,7 @@ router.get("/croquis", async (req, res) => {
 });
 
 /**
- * Endpoint GET: /mesa
+ * GET /mesa
  * Parámetros: sheetId, mesa
  */
 router.get("/mesa", async (req, res) => {

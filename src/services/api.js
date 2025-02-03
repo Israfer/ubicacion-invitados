@@ -5,7 +5,7 @@ import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://ubicacion-invitados.vercel.app/api";
 
 /**
- * Obtiene sugerencias de búsqueda a partir de un query.
+ * Obtiene sugerencias de búsqueda.
  */
 export async function fetchSearchSuggestions(query, sheetId) {
   try {
@@ -19,7 +19,7 @@ export async function fetchSearchSuggestions(query, sheetId) {
 }
 
 /**
- * Obtiene el detalle de búsqueda (resultado único) usando el parámetro detalle=true.
+ * Obtiene el detalle de búsqueda (resultado único) usando detalle=true.
  */
 export async function fetchSearchDetail(query, sheetId) {
   try {
