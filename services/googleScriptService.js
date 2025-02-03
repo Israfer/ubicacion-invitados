@@ -13,7 +13,7 @@ if (!googleScriptUrl) {
 
 /**
  * Llama al endpoint GET para buscar ubicación.
- * @param {Object} param0 - Objeto con property 'parameter' que contiene sheetId, search y detalle.
+ * @param {Object} param0 - Objeto con la propiedad 'parameter' que contiene sheetId, search y detalle.
  * @returns {Promise<Object>} Resultado de la búsqueda.
  */
 export async function buscarUbicacion({ parameter: { sheetId, search, detalle } }) {
@@ -36,7 +36,7 @@ export async function buscarUbicacion({ parameter: { sheetId, search, detalle } 
 
 /**
  * Llama al endpoint GET para obtener los datos del croquis.
- * @param {Object} param0 - Objeto con property 'parameter' que contiene sheetId.
+ * @param {Object} param0 - Objeto con la propiedad 'parameter' que contiene sheetId.
  * @returns {Promise<Object>} Datos del croquis.
  */
 export async function getCroquisData({ parameter: { sheetId } }) {
@@ -55,7 +55,7 @@ export async function getCroquisData({ parameter: { sheetId } }) {
 
 /**
  * Llama al endpoint GET para obtener los registros de una mesa.
- * @param {Object} param0 - Objeto con property 'parameter' que contiene mesa y sheetId.
+ * @param {Object} param0 - Objeto con la propiedad 'parameter' que contiene mesa y sheetId.
  * @returns {Promise<Object>} Datos de la mesa.
  */
 export async function getMesaData({ parameter: { mesa, sheetId } }) {

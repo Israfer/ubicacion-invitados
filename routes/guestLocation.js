@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * Endpoint GET: /buscar
- * Parámetros: sheetId, search (o qrData) y opcional detalle ("true" para obtener detalle único)
+ * Parámetros: sheetId, search (o qrData) y opcional detalle ("true" para detalle único)
  */
 router.get("/buscar", async (req, res) => {
   const { sheetId, search, qrData, detalle } = req.query;
@@ -15,6 +15,7 @@ router.get("/buscar", async (req, res) => {
   }
   try {
     const query = qrData || search;
+    console.log(`Endpoint /buscar: sheetId=${sheetId} search=${query} detalle=${detalle}`);
     const result = await buscarUbicacion({ parameter: { sheetId, search: query, detalle } });
     res.json(result);
   } catch (error) {
@@ -32,6 +33,7 @@ router.get("/croquis", async (req, res) => {
     return res.status(400).json({ error: "Falta sheetId" });
   }
   try {
+    console.log(`Endpoint /croquis: sheetId=${sheetId}`);
     const result = await getCroquisData({ parameter: { sheetId } });
     res.json(result);
   } catch (error) {
@@ -49,6 +51,7 @@ router.get("/mesa", async (req, res) => {
     return res.status(400).json({ error: "Falta sheetId o mesa" });
   }
   try {
+    console.log(`Endpoint /mesa: sheetId=${sheetId} mesa=${mesa}`);
     const result = await getMesaData({ parameter: { sheetId, mesa } });
     res.json(result);
   } catch (error) {
