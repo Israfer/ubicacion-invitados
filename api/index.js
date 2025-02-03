@@ -21,8 +21,8 @@ app.use(cors());
 app.use(express.json());
 
 // Ruta base para /api: responde inmediatamente
-app.get("/", (req, res) => {
-  console.log("Request received on /");
+app.get("/api", (req, res) => { // Cambia "/" por "/api"
+  console.log("Request received on /api");
   res.setHeader("Content-Type", "application/json");
   res.write(JSON.stringify({
     message:
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 });
 
 // Monta las rutas de la API (imitando el código original)
-app.use("/", guestLocationRoutes);
+app.use("/api", guestLocationRoutes); // Cambia "/" por "/api"
 
 // Ruta 404 para rutas no definidas
 app.use((req, res) => {
