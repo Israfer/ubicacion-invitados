@@ -1,14 +1,11 @@
 // src/services/api.js
 import axios from "axios";
 
-// URL del backend (configurable vía variables de entorno)
+// URL base del backend (definida vía variable de entorno o hardcodeada para pruebas)
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://ubicacion-invitados.vercel.app/api";
 
 /**
  * Obtiene sugerencias de búsqueda a partir de un query.
- * @param {string} query - Texto a buscar.
- * @param {string} sheetId - ID de la Google Sheet.
- * @returns {Promise<Object>} Sugerencias.
  */
 export async function fetchSearchSuggestions(query, sheetId) {
   try {
@@ -23,9 +20,6 @@ export async function fetchSearchSuggestions(query, sheetId) {
 
 /**
  * Obtiene el detalle de búsqueda (resultado único) usando el parámetro detalle=true.
- * @param {string} query - Texto a buscar o datos del QR.
- * @param {string} sheetId - ID de la Google Sheet.
- * @returns {Promise<Object>} Detalle del registro.
  */
 export async function fetchSearchDetail(query, sheetId) {
   try {
@@ -40,8 +34,6 @@ export async function fetchSearchDetail(query, sheetId) {
 
 /**
  * Obtiene los datos del croquis para el mapa interactivo.
- * @param {string} sheetId - ID de la Google Sheet.
- * @returns {Promise<Object>} Datos del croquis.
  */
 export async function fetchCroquisData(sheetId) {
   try {
@@ -56,9 +48,6 @@ export async function fetchCroquisData(sheetId) {
 
 /**
  * Obtiene los registros de una mesa.
- * @param {string} mesa - Número o identificador de la mesa.
- * @param {string} sheetId - ID de la Google Sheet.
- * @returns {Promise<Object>} Datos de la mesa.
  */
 export async function fetchMesaData(mesa, sheetId) {
   try {
