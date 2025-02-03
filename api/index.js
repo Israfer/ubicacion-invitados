@@ -10,16 +10,25 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const app = express();
+
+// Desactivar Keep-Alive en todas las respuestas
+app.use((req, res, next) => {
+  res.setHeader('Connection', 'close');
+  next();
+});
+
 app.use(cors());
 app.use(express.json());
 
-// Ruta base para /api: debe responder inmediatamente
+// Ruta base para /api: responde inmediatamente
 app.get("/", (req, res) => {
   console.log("Request received on /");
-  res.json({
+  res.setHeader("Content-Type", "application/json");
+  res.write(JSON.stringify({
     message:
       "Bienvenido a la API de Ubicación de Invitados. Utilice los endpoints /buscar, /croquis y /mesa."
-  });
+  }));
+  res.end();
 });
 
 // Monta las rutas de la API
@@ -30,11 +39,6 @@ app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-// Crea el handler usando serverless-http
+// Crea el handler usando serverless-http y exporta directamente
 const handler = serverless(app);
-
-// Exporta por defecto una función asíncrona que espera la resolución del handler
-export default async (req, res) => {
-  console.log("Handler invoked.");
-  return await handler(req, res);
-};
+export default handler;
